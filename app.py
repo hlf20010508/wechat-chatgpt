@@ -19,6 +19,7 @@ robot = ChatGPT(model, preset, memory_length)
 @app.route('/', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
+        # 请在此处选择api
         return handle_receive_auto(request.data)
         # handle_receive(request.data)
         # return ''
@@ -59,7 +60,10 @@ def check_signature(args):
     except Exception as e:
         logger(e)
 
+# 请在main()中自行选择回复所使用的api
+
 # 使用人工回复api
+# 如果已经通过微信认证，强烈建议使用人工回复api，否则只能退而求其次使用自动回复api
 def handle_receive(data):
     xml = etree.XML(data)
 

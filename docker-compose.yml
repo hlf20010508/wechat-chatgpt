@@ -9,4 +9,5 @@ services:
     environment:
       - token=$token
       - api_key=$api_key
+      - preset=$preset
     command: pipenv run flask run -p 5030 -h 0.0.0.0
