@@ -1,0 +1,12 @@
+version: '3'
+services:
+  wechat-chatgpt:
+    container_name: wechat-chatgpt
+    image: hlf01/wechat-chatgpt
+    restart: always
+    # 不使用端口映射，因为minio服务器和mysql服务器在本地时会使用127.0.0.1作为地址，所以需要直接使用宿主机的网卡
+    network_mode: host
+    environment:
+      - token=$token
+      - api_key=$api_key
+    command: pipenv run flask run -p 5030 -h 0.0.0.0
