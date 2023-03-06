@@ -3,17 +3,25 @@ import hashlib
 import os
 from flask import Flask, request, jsonify
 from lxml import etree
+import requests
 from log import logger
-import chatgpt
+from chatgpt import ChatGPT, Robot_Thread
 
 app = Flask(__name__)
 
 TOKEN = os.environ['token']
+model = os.environ.get('model', 'gpt-3.5-turbo')
+preset = os.environ.get('preset', '')
+memory_length = int(os.environ.get('memory_length', 100))
+
+robot = ChatGPT(model, preset, memory_length)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
-        return handle_receive(request.data)
+        return handle_receive_auto(request.data)
+        # handle_receive(request.data)
+        # return ''
     elif request.method == 'GET':
         return check_signature(request.args)
     else:
@@ -21,6 +29,7 @@ def main():
         logger(message)
         return message
 
+# 绑定服务器时用于验证
 def check_signature(args):
     signature = args.get('signature')
     timestamp = args.get('timestamp')
@@ -50,6 +59,7 @@ def check_signature(args):
     except Exception as e:
         logger(e)
 
+# 使用人工回复api
 def handle_receive(data):
     xml = etree.XML(data)
 
@@ -59,7 +69,40 @@ def handle_receive(data):
 
     logger('received message:\nfrom: %s\nto: %s\ncontent:%s\n'%(from_user_name, to_user_name, content))
 
-    reply = chatgpt.reply(content)
+    access_token = get_access_token()
+    robot_thread = Robot_Thread(robot, from_user_name, content, access_token)
+    robot_thread.start()
+
+# 获取access_token
+def get_access_token():
+    app_id = os.environ['app_id']
+    app_secret = os.environ['app_secret']
+    url = 'https://api.weixin.qq.com/cgi-bin/token'
+    params = {
+        'grant_type': 'client_credential',
+        'appid': app_id,
+        'secret': app_secret,
+    }
+    try:
+        res = requests.get(url, params=params)
+        access_token = res.json()['access_token']
+        logger('receieved access token: %s\n'%access_token)
+        return access_token
+    except Exception as e:
+        logger(e)
+
+# 使用自动回复api
+# 由于微信有5秒等待时间，若chatgpt在5秒内没说完，则可能造成重复回答或不回答，因此若已通过微信认证，请使用人工回复api进行异步回复
+def handle_receive_auto(data):
+    xml = etree.XML(data)
+
+    from_user_name = xml.find('FromUserName').text
+    to_user_name = xml.find('ToUserName').text
+    content = xml.find('Content').text
+
+    logger('received message:\nfrom: %s\nto: %s\ncontent:%s\n'%(from_user_name, to_user_name, content))
+
+    reply = robot.reply(content)
 
     reply_dict = {
         'ToUserName': from_user_name,
@@ -81,5 +124,3 @@ def handle_receive(data):
     """
 
     return xml.format(**reply_dict)
-
-
