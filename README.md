@@ -22,8 +22,6 @@ sudo docker build -t host/wechat-chatgpt --no-cache .
 pip install pipenv
 # 安装依赖
 pipenv sync
-# 若报错则执行
-pipenv install
 # 填写环境变量
 export token=$token
 export api_key=$api_key

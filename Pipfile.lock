@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ced7457a3f3dd20e0f1f076ba3cac8b195619a7123b96825503b5bc87d71467a"
+            "sha256": "61245a84cc0c2444429c37e95f4b61c06419197ba7e34255017ff5a55e2233af"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -9,9 +9,9 @@
         },
         "sources": [
             {
-                "name": "pip_conf_index_global",
-                "url": "http://mirrors.tencentyun.com/pypi/simple",
-                "verify_ssl": false
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
             }
         ]
     },
@@ -247,7 +247,7 @@
                 "sha256:7eb373984bf1c770023fce9db164ed0c3353cd0b53f130f4693da0ca756a2e6d",
                 "sha256:c0bec9477df1cb867e5a67c9e1ab758de9cb4a3e52dd70681f59fa40a62b3f2d"
             ],
-            "index": "pip_conf_index_global",
+            "index": "pypi",
             "version": "==2.2.3"
         },
         "frozenlist": {
@@ -442,7 +442,7 @@
                 "sha256:f1496ea22ca2c830cbcbd473de8f114a320da308438ae65abad6bab7867fe38f",
                 "sha256:f49e52d174375a7def9915c9f06ec4e569d235ad428f70751765f48d5926678c"
             ],
-            "index": "pip_conf_index_global",
+            "index": "pypi",
             "version": "==4.9.2"
         },
         "markupsafe": {
@@ -586,7 +586,7 @@
                 "sha256:0efa486016283607cb72c23eac346ac739a22613ff4bff101df72a138cb2de60",
                 "sha256:7d4066ea529658a1f1696a8766912b3f3b7139faca860dc530bf102f0b19d42c"
             ],
-            "index": "pip_conf_index_global",
+            "index": "pypi",
             "version": "==0.27.0"
         },
         "requests": {
