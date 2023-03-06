@@ -37,8 +37,9 @@ class ChatGPT:
       "role": "assistant",
       "content": result
     })
-
-    self.recycle_memory()
+    
+    if self.memory_length > 0:
+      self.recycle_memory()
 
     return result
   
@@ -48,8 +49,12 @@ class ChatGPT:
   # 遗忘超过设定对话记录长度的对话
   def recycle_memory(self):
     length = len(self.conversation)
-    if length >= self.memory_length:
+    if length > self.memory_length:
       self.conversation = self.conversation[length - self.memory_length : ]
+      self.conversation.insert(0, {
+        "role": "system",
+        "content": self.preset
+      })
 
   # 设定新的角色预设。这会清空所有对话记录
   def reset_character(self, setting):

@@ -15,7 +15,7 @@ sudo apt-get install docker-compose
 # 修改docker-compose.yml 中的环境变量
 # 微信：token
 # openai：api_key
-# 可选参数：model（模型版本），preset（一段对人设的描述），memory_length（记忆长度）
+# 可选参数：model（模型版本），preset（一段对人设的描述，例：你是我的好朋友。），memory_length（记忆长度，小于0时表示无限长度）
 vim docker-compose.yml
 # 部署
 sudo docker-compose up -d
