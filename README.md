@@ -16,6 +16,7 @@ sudo apt-get install docker-compose
 # 微信：token
 # openai：api_key
 # 可选参数：model（模型版本），preset（一段对人设的描述，例：你是我的好朋友。），memory_length（记忆长度，小于0时表示无限长度）
+# preset中，描述内容的主语是chatgpt，比如：我叫小红，你叫小明。那么小红是chatgpt，你是小明
 vim docker-compose.yml
 # 部署
 sudo docker-compose up -d
@@ -23,7 +24,7 @@ sudo docker-compose up -d
 
 自主构建镜像
 ```sh
-sudo docker build -t host/wechat-chatgpt --no-cache .
+sudo docker build -t YOUR_HOST_NAME/wechat-chatgpt --no-cache .
 ```
 
 ## 直接运行
@@ -36,9 +37,7 @@ pipenv sync
 export token=$token
 export api_key=$api_key
 # 可选
-export model=$model
 export preset=$preset
-export memory_length=$memory_length
 # 运行
 pipenv run flask run -h 0.0.0.0 -p 5030
 ```
