@@ -9,12 +9,15 @@ from chatgpt import ChatGPT, Robot_Thread
 
 app = Flask(__name__)
 
+# wechat
 TOKEN = os.environ['token']
+# openai
+api_key = os.environ['api_key']
 model = os.environ.get('model', 'gpt-3.5-turbo')
 preset = os.environ.get('preset', '')
 memory_length = int(os.environ.get('memory_length', 100))
 
-robot = ChatGPT(model, preset, memory_length)
+robot = ChatGPT(api_key, model, preset, memory_length)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():

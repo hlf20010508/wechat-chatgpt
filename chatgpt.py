@@ -1,13 +1,11 @@
-import os
 from threading import Thread
 import requests
 import openai
 from log import logger
 
-openai.api_key = os.environ['api_key']
-
 class ChatGPT:
-  def __init__(self, model="gpt-3.5-turbo", preset='', memory_length=100):
+  def __init__(self, api_key, model="gpt-3.5-turbo", preset='', memory_length=100):
+    openai.api_key = api_key
     self.model = model
     # 对话历史记录
     self.conversation = []
