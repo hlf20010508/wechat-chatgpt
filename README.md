@@ -17,7 +17,7 @@ sudo apt-get install docker-compose
 # openai：api_key
 # 可选参数：model（模型版本），preset（一段对人设的描述，例：你是我的好朋友。），memory_length（记忆长度，小于0时表示无限长度）
 # preset中，描述内容的主语是chatgpt，比如：我叫小红，你叫小明。那么小红是chatgpt，你是小明
-# 如果使用英文，中间有空格的话，在docker-compose.yml中设置环境变量不需要带引号，在系统中设置环境变量需要带引号
+# 如果使用英文，中间有空格的话，在docker-compose.yml中设置环境变量不要带引号，在系统中设置环境变量要带引号
 vim docker-compose.yml
 # 部署
 sudo docker-compose up -d
